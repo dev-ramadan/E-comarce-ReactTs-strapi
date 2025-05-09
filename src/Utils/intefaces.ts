@@ -4,8 +4,9 @@ export interface IProduct  {
     image :string | any;
     description : string ;
     price:number;
-    url :string;
+    url ?:string;
     documentId:string;
     qty:number
-    imageUrl:string
+    imageUrl?:string;
+    formats?:any
 }

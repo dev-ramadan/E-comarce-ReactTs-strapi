@@ -10,8 +10,8 @@ const Layoyt = ({} : IProps) => {
   return (
     <>
     <Nav/>
-    <Drawer/>
     <Outlet/>
+    <Drawer/>
     <Footer/>
     </>
   )

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import loginSlice  from './features/loginSlice';
+import loginSlice  from './features/loginSlice';
 import shpingCartSlice from './features/ShopinCartSlice'
 import golbaleSlice from './features/golbaleSlice'
 
@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 export const store = configureStore({
   reducer: {
     cart : shpingCartSlice,
-    // login: loginSlice,
+    login: loginSlice,
     cartDrawer: golbaleSlice
     
   },

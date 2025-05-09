@@ -1,4 +1,5 @@
-import { IProduct } from "@/Utils/intefaces";
+import { chackItemInCart } from "../../Utils";
+import { IProduct } from "../../Utils/intefaces";
 import {createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -12,7 +13,7 @@ name : 'cart' ,
 initialState ,
 reducers: {
     addToCart : (state,action:PayloadAction<IProduct>) => {
-        state.cartProducts = [...state.cartProducts , action.payload]
+        state.cartProducts = chackItemInCart(state.cartProducts,action.payload)
         localStorage.setItem("cart",JSON.stringify(state.cartProducts))
     },
     removeProduct : (state,action)=>{

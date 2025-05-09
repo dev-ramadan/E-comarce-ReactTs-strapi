@@ -1,15 +1,22 @@
+import { useSelector } from 'react-redux';
 import { openDrawer } from '../../App/features/golbaleSlice';
 import { useAppDispatch } from '../../App/Store';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { selectCart } from '../../App/features/ShopinCartSlice';
+import { IProduct } from '@/Utils/intefaces';
+import UserProfile from '../UserProfile/UserProfile';
+import Login from '../../Pages/Login/Login';
 interface IProps { }
 
 const Nav = ({ }: IProps) => {
       const dispatch = useAppDispatch()
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const {cartProducts} = useSelector(selectCart)
+    const total = cartProducts.reduce((amount:number,item:IProduct) => amount + item.price * item.qty ,0)
     return (
         <>
-        <div className='fixed inset-0 z-50 h-fit'>
+        <div className='fixed inset-0 z-50 h-fit '>
         <header className="py-4 shadow-md bg-white relative z-50">
                 <div className="container mx-auto px-4">
                     <div className="flex items-center justify-between">
@@ -43,9 +50,14 @@ const Nav = ({ }: IProps) => {
                             <NavLink to="#"><img src="img/icon/heart.png" alt="Heart" className="h-5" /></NavLink>
                             <div  className="relative"  onClick={()=>dispatch(openDrawer())}>
                                 <img src="img/icon/cart.png" alt="Cart" className=" h-5"/>
-                                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">7</span>
+                                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{cartProducts.length}</span>
                             </div>
-                            <div className="text-sm font-semibold">$4</div>
+                            <div className="text-sm font-semibold">${total}</div>
+                            <div className='hidden md:block'>
+
+                            <UserProfile/>
+                            <NavLink to={'/login'}>LOGIN</NavLink>
+                            </div>
 
                             {/* Hamburger button */}
                             <button
@@ -53,7 +65,6 @@ const Nav = ({ }: IProps) => {
                                 onClick={() => setMobileMenuOpen(true)}
                             >
                                 <i className="fa fa-bars"></i>
-                                open
                             </button>
                         </div>
                     </div>
@@ -74,7 +85,7 @@ const Nav = ({ }: IProps) => {
                 </div>
                 <ul className="flex flex-col p-4 space-y-4 text-gray-700 text-base font-medium">
                     <li><NavLink to="/" onClick={() => setMobileMenuOpen(false)}>Home</NavLink></li>
-                    <li><NavLink to="/product" onClick={() => setMobileMenuOpen(false)}>Shop</NavLink></li>
+                    <li><NavLink to="/shop" onClick={() => setMobileMenuOpen(false)}>Shop</NavLink></li>
                     <li><NavLink to="./about.html">About Us</NavLink></li>
                     <li><NavLink to="./shop-details.html">Shop Details</NavLink></li>
                     <li><NavLink to="/cart" onClick={() => setMobileMenuOpen(false)}>Shopping Cart</NavLink></li>
@@ -82,6 +93,7 @@ const Nav = ({ }: IProps) => {
                     <li><NavLink to="./blog-details.html">Blog Details</NavLink></li>
                     <li><NavLink to="./blog.html">Blog</NavLink></li>
                     <li><NavLink to="./contact.html">Contacts</NavLink></li>
+                    <li><UserProfile/></li>
                 </ul>
             </div>
 
